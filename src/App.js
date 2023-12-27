@@ -26,12 +26,13 @@ const reducer = (state, action) => {
       break;
     }
     default:
-      return newState;
+      return state;
   }
+  return newState;
 }
 
 export const DiaryStateContext = React.createContext();
-export const DiarydispatchConent = React.createContext();
+export const DiaryDispatchContext = React.createContext();
 
 const dummyData = [
   {
@@ -63,7 +64,7 @@ const dummyData = [
     emotion: 5,
     content: "오늘의 일기 5번",
     date: 1703205020473
-  }
+  },
 ]
 
 function App() {
@@ -91,18 +92,18 @@ function App() {
 
   return (
     <DiaryStateContext.Provider value={data}>
-      <DiarydispatchConent.Provider value={{onCreate, onEdit, onRemove}}>
+      <DiaryDispatchContext.Provider value={{onCreate, onEdit, onRemove}}>
         <BrowserRouter>
           <div className="App">
             <Routes>
               <Route path='/' element={<Home></Home>}></Route>
               <Route path='/new' element={<New></New>}></Route>
-              <Route path='/edit' element={<Edit></Edit>}></Route>
+              <Route path='/edit/:id' element={<Edit></Edit>}></Route>
               <Route path='/diary/:id' element={<Diary></Diary>}></Route>
             </Routes>
           </div>
         </BrowserRouter>
-      </DiarydispatchConent.Provider>
+      </DiaryDispatchContext.Provider>
     </DiaryStateContext.Provider>
   );
 }
